@@ -68,14 +68,10 @@ Start the environment with Docker:
 docker-compose up -d
 
 
-Access Jupyter Notebooks:
-
-http://localhost:8888
 
 
-Access Airflow:
 
-http://localhost:8080
+
 
 📖 Examples
 
