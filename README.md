@@ -51,17 +51,6 @@ Docker & Docker Compose
 
 Python 3.9+
 
-Apache Spark (local or cluster)
-
-Jupyter Lab/Notebook
-
-Installation
-
-Clone the repository:
-
-git clone https://github.com/your-username/big-data-repo.git
-cd big-data-repo
-
 
 Start the environment with Docker:
 
