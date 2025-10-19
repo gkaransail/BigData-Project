@@ -1,0 +1,44 @@
+# Use official Python 3.10 slim image
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies for pyodbc, Excel, and general build tools
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    freetds-dev \
+    unixodbc-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (better caching)
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Jupyter kernel and Papermill
+RUN pip install --no-cache-dir ipykernel jupyter papermill
+
+# Ensure python3 kernel is available for Papermill
+RUN python -m ipykernel install --user --name=python3 --display-name "Python 3"
+
+# --- Copy code and notebooks ---
+# Copy your FastAPI app code (replace with your actual main filename, e.g. fast_app.py)
+COPY fast_app.py .  
+
+# Copy the analysis notebook
+COPY analysis_notebook.ipynb .  
+
+# Copy your custom Python package (if you have one)
+COPY custom_package ./custom_package  
+
+# Create a directory for outputs (Excel files, logs)
+RUN mkdir -p /app/output
+
+# Expose FastAPI port
+EXPOSE 8053
+
+# Run FastAPI with Uvicorn (without --reload in Docker)
+CMD ["uvicorn", "fast_app:app", "--host", "0.0.0.0", "--port", "8053"]
