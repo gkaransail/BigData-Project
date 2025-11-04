@@ -47,11 +47,6 @@ big-data-repo/
 ⚡ Getting Started
 Prerequisites
 
-Docker & Docker Compose
-
-Python 3.9+
-
-
 Start the environment with Docker:
 
 docker-compose up -d
